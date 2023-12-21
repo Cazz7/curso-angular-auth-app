@@ -1,6 +1,6 @@
-import { Router, type CanActivateFn } from '@angular/router';
-import { AuthService } from '../services/auth.service';
 import { inject } from '@angular/core';
+import { CanActivateFn, Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 import { AuthStatus } from '../interfaces';
 
 export const isAuthenticatedGuard: CanActivateFn = (route, state) => {
@@ -16,9 +16,9 @@ export const isAuthenticatedGuard: CanActivateFn = (route, state) => {
 
   // En el caso en el que aún no conozca el estado de la autenticación,
   // no debo forzar la navegación, solo retornar false
-  if( authService.authStatus() === AuthStatus.checking ){
-    return false;
-  }
+  //if( authService.authStatus() === AuthStatus.checking ){
+  //  return false;
+  //}
 
   router.navigateByUrl('/auth/login')
 

@@ -9,7 +9,7 @@ export class DashboardLayoutComponent {
 
   private authService = inject( AuthService );
   // Esta es la forma mediante señales
-  public user = computed( () => this.authService.currentUser() )
+  public user = computed(() => this.authService.currentUser() );
 
   // Esta es la forma clásica de retornar el user
 /*   get user(){

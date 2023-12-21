@@ -1,8 +1,9 @@
-import { Router, type CanActivateFn } from '@angular/router';
-import { AuthService } from '../services/auth.service';
 import { inject } from '@angular/core';
+import { CanActivateFn, Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 import { AuthStatus } from '../interfaces';
 
+// PublicGuard - PrivateGuard
 export const isNotAuthenticatedGuard: CanActivateFn = (route, state) => {
 
   //const url = state.url;

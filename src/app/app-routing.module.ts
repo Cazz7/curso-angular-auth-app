@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { isAuthenticatedGuard } from './auth/guards/isAuthenticated.guard';
-import { isNotAuthenticatedGuard } from './auth/guards/isNotAuthenticated.guard';
+import { isNotAuthenticatedGuard, isAuthenticatedGuard } from './auth/guards';
 
 const routes: Routes = [
+
   {
     path: 'auth',
     canActivate: [ isNotAuthenticatedGuard ],
@@ -17,7 +17,9 @@ const routes: Routes = [
   {
     path: '**',
     redirectTo: 'auth'
-  }
+  },
+
+
 ];
 
 @NgModule({

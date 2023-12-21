@@ -1,6 +1,6 @@
 
-export const environments = {
+export const environment = {
 
-  baseUrl: 'http://localhost:3001'
+  baseUrl: 'end_point'
 
 }

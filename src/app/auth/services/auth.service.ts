@@ -1,7 +1,8 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { environments } from '../../../environments/environments.prod';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environments.prod';
 import { Observable, catchError, map, of, tap, throwError } from 'rxjs';
+
 import { AuthStatus, CheckTokenResponse, LoginResponse, User } from '../interfaces';
 
 @Injectable({
@@ -9,7 +10,7 @@ import { AuthStatus, CheckTokenResponse, LoginResponse, User } from '../interfac
 })
 export class AuthService {
 
-  private readonly baseUrl: string = environments.baseUrl;
+  private readonly baseUrl: string = environment.baseUrl;
   private http = inject( HttpClient );
 
   // Estas señales son privadas porque no se modificarán por fuera del servicio
@@ -39,17 +40,10 @@ export class AuthService {
     const body = { email, password };
 
     return this.http.post<LoginResponse>( url, body )
-    .pipe(
-    // efecto secundario para convertir la respuesta
-      tap( ({ user, token }) => this.setAuthentication(user, token) ),
-
-      // to change the form of the result
-      map( () => true ),
-
-      // Se puede hacer retornando un of(false)
-      // en caso de error, pero el lo quiso hacer con un throwError que nos a mas detalles
-      catchError( err => throwError( () => err.error.message ) )
-     );
+      .pipe(
+        map( ({ user, token }) => this.setAuthentication( user, token )),
+        catchError( err => throwError( () => err.error.message ))
+      );
 
   }
 
@@ -72,7 +66,7 @@ export class AuthService {
         //Error
         //catchError(()=>of(false))
         catchError(() => {
-          this._currentUser.set( null );
+          //this._currentUser.set( null );
           this._authStatus.set( AuthStatus.notAuthenticated );
           return of(false);
         })
@@ -81,10 +75,10 @@ export class AuthService {
   }
 
   logout() {
-    this._currentUser.set( null );
-    this._authStatus.set( AuthStatus.notAuthenticated );
-    // token is stored in local storage
     localStorage.removeItem('token');
+    this._currentUser.set(null);
+    this._authStatus.set( AuthStatus.notAuthenticated );
+
   }
 
 }
